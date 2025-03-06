@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Hover & Popup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+
+        /* Image Container */
+        .image-container {
+            position: relative;
+            width: 300px;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Hover Overlay */
+        .hover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .image-container:hover .hover-overlay {
+            opacity: 1;
+        }
+
+        /* Full-Screen Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensures it's always on top */
+        }
+
+        /* Popup Modal */
+        .popup {
+            width: 80%;
+            max-width: 900px;
+            height: 80vh;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            z-index: 1001; /* Higher than overlay */
+        }
+
+        /* Left Side - Image or Video */
+        .popup-media {
+            flex: 1;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-media img, .popup-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Right Side - Comments Section */
+        .popup-comments {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .popup-comments h3 {
+            margin-bottom: 10px;
+        }
+
+        .comment {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .comment p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Bottom - Like & Comment Box */
+        .popup-footer {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .popup-footer .actions {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .popup-footer .comment-box {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            padding: 5px;
+        }
+
+        .popup-footer input {
+            flex: 1;
+            border: none;
+            padding: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .popup-footer button {
+            border: none;
+            background: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: crimson;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .close-btn:hover {
+            background: darkred;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Image Container with Hover Effect -->
+    <div class="image-container" onclick="showPopup()">
+        <img src="profile-picture.jpg" alt="realdonaldtrump's profile picture">
+        <div class="hover-overlay">❤️ 12.5K &nbsp; 💬 4.2K</div>
+    </div>
+
+    <!-- Full-Screen Popup Overlay -->
+    <div class="popup-overlay" id="popup-overlay">
+        
+        <!-- Popup Modal -->
+        <div class="popup">
+            
+            <!-- Left Side: Image or Video -->
+            <div class="popup-media">
+                <video src="video.mp4" controls></video>
+                <!-- Use <img src="profile-picture.jpg"> instead for image -->
+            </div>
+
+            <!-- Right Side: Comments Section -->
+            <div class="popup-comments">
+                <h3>Comments</h3>
+                <div class="comment">
+                    <img src="user1.jpg" alt="User1">
+                    <p><strong>user1:</strong> This is amazing! 😍</p>
+                </div>
+                <div class="comment">
+                    <img src="user2.jpg" alt="User2">
+                    <p><strong>user2:</strong> I totally agree! 🔥</p>
+                </div>
+                <div class="comment">
+                    <img src="user3.jpg" alt="User3">
+                    <p><strong>user3:</strong> Wow, so cool! 🚀</p>
+                </div>
+            </div>
+
+            <!-- Bottom: Like & Comment Box -->
+            <div class="popup-footer">
+                <div class="actions">
+                    ❤️ 💬 🔄 📩
+                </div>
+                <div class="comment-box">
+                    <input type="text" placeholder="Add a comment...">
+                    <button>➤</button>
+                </div>
+            </div>
+
+            <!-- Close Button -->
+            <button class="close-btn" onclick="hidePopup()">✖</button>
+        </div>
+
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById("popup-overlay").style.display = "flex";
+        }
+
+        function hidePopup() {
+            document.getElementById("popup-overlay").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
